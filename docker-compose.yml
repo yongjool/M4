@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # Frontend Service
+  m4-frontend:
+    build:
+      context: ./frontend/insurance-assistant-app
+      dockerfile: Dockerfile  # Frontend Dockerfile
+    container_name: m4-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - m4-backend
+
+  # Backend Service
+  m4-backend:
+    build:
+      context: ./backend  # Path to the backend directory
+      dockerfile: Dockerfile  # Backend Dockerfile
+    container_name: m4-backend
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./backend:/src
